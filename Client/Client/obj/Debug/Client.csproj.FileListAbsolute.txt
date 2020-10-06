@@ -1,0 +1,16 @@
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\bin\Debug\Client.exe.config
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\bin\Debug\Client.exe
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\bin\Debug\Client.pdb
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\bin\Debug\SFML.Audio.dll
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\bin\Debug\SFML.Graphics.dll
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\bin\Debug\SFML.System.dll
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\bin\Debug\SFML.Window.dll
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\bin\Debug\SFML.Audio.xml
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\bin\Debug\SFML.Graphics.xml
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\bin\Debug\SFML.System.xml
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\bin\Debug\SFML.Window.xml
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\obj\Debug\Client.csprojAssemblyReference.cache
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\obj\Debug\Client.csproj.CopyComplete
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\obj\Debug\Client.exe
+C:\Users\DELL\Documents\www\Github\GameEngine\Open2DGameEngine\Client\Client\obj\Debug\Client.pdb
