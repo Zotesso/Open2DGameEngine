@@ -10,6 +10,7 @@ namespace Client
         private SpriteBatch _spriteBatch;
 
         ClientTCP ctcp;
+        ClientHandleData clientDataHandle;
 
         public Game1()
         {
@@ -22,7 +23,10 @@ namespace Client
         {
             // TODO: Add your initialization logic here
             ctcp = new ClientTCP();
+            clientDataHandle = new ClientHandleData();
+            clientDataHandle.InitializeMessages();
             ctcp.ConnectToServer();
+            ctcp.SendLogin();
             base.Initialize();
         }
 

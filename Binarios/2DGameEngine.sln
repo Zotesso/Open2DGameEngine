@@ -11,6 +11,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Bindings", "Bindings\Bindin
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Bindings\Bindings.projitems*{11b44ea6-d648-46a8-bbe3-d5dba3cceed4}*SharedItemsImports = 5
 		Bindings\Bindings.projitems*{b37666a1-14dc-4002-88d8-6043d152e481}*SharedItemsImports = 13
 		Bindings\Bindings.projitems*{e98dba28-7aef-4280-8141-e658bb81b172}*SharedItemsImports = 5
 	EndGlobalSection

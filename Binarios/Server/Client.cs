@@ -11,11 +11,14 @@ namespace Server
         public string IP;
         public TcpClient Socket;
         public NetworkStream myStream;
+        private ServerHandleData handleServerData;
         public bool Closing;
         public byte[] readBuff;
 
         public void Start()
         {
+            handleServerData = new ServerHandleData();
+
             Socket.SendBufferSize = 4096;
             Socket.ReceiveBufferSize = 4096;
             myStream = Socket.GetStream();
@@ -39,6 +42,7 @@ namespace Server
                 Array.Resize(ref newBytes, readBytes);
                 Buffer.BlockCopy(readBuff, 0, newBytes, 0, readBytes);
 
+                handleServerData.HandleNetworkMessages(Index, newBytes);
                 myStream.BeginRead(readBuff, 0, Socket.ReceiveBufferSize, OnReceiveData, null);
             }
             catch
