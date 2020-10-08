@@ -7,7 +7,7 @@ namespace Client
     class ClientTCP
     {
         public TcpClient PlayerSocket;
-        private  NetworkStream myStream;
+        private NetworkStream myStream;
         private ClientHandleData clientDataHandle;
         private byte[] asyncBuff;
         private bool connecting;

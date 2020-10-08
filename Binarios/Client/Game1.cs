@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Myra;
+using Myra.Graphics2D;
+using Myra.Graphics2D.UI;
 
 namespace Client
 {
@@ -8,6 +11,7 @@ namespace Client
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Desktop _desktop;
 
         ClientTCP ctcp;
         ClientHandleData clientDataHandle;
@@ -26,7 +30,7 @@ namespace Client
             clientDataHandle = new ClientHandleData();
             clientDataHandle.InitializeMessages();
             ctcp.ConnectToServer();
-            ctcp.SendLogin();
+          //  ctcp.SendLogin();
             base.Initialize();
         }
 
@@ -34,6 +38,69 @@ namespace Client
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            MyraEnvironment.Game = this;
+
+            var panel = new Panel();
+
+            var login = new Label
+            {
+                Id = "label",
+                Text = "Login:",
+                TextColor = Color.Black,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            panel.Widgets.Add(login);
+            
+            var textBox1 = new TextBox {
+                Margin = new Thickness(0, 40, 0, 0),
+                Width = 200,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            panel.Widgets.Add(textBox1);
+
+            var password = new Label
+            {
+                Margin = new Thickness(0, 80, 0, 0),
+                Id = "label",
+                Text = "Password:",
+                TextColor = Color.Black,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            panel.Widgets.Add(password);
+
+            var textBox2 = new TextBox
+            {
+                Margin = new Thickness(0, 120, 0, 0),
+                Width = 200,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            panel.Widgets.Add(textBox2);
+
+            // Button
+            var sendLogin = new TextButton
+            {
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Margin = new Thickness(0, 0, 0, 50),
+                Text = "LOGAR"
+            };
+
+
+
+            panel.Widgets.Add(sendLogin);
+
+
+            // Add it to the desktop
+            _desktop = new Desktop();
+            _desktop.Root = panel;
             // TODO: use this.Content to load your game content here
         }
 
@@ -49,8 +116,8 @@ namespace Client
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            GraphicsDevice.Clear(Color.LightSkyBlue);
+            _desktop.Render();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
