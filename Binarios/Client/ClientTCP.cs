@@ -7,7 +7,7 @@ namespace Client
     class ClientTCP
     {
         public TcpClient PlayerSocket;
-        private NetworkStream myStream;
+        private static NetworkStream myStream;
         private ClientHandleData clientDataHandle;
         private byte[] asyncBuff;
         private bool connecting;
@@ -84,8 +84,20 @@ namespace Client
         {
             PacketBuffer buffer = new PacketBuffer();
             buffer.AddInteger((int)ClientPackets.CLogin);
-            buffer.AddString("Pedro");
-            buffer.AddString("ugauga");
+            buffer.AddString(Globals.loginUsername);
+            buffer.AddString(Globals.loginPassword);
+
+            SendData(buffer.ToArray());
+            buffer.Dispose();
+        }
+
+        public void SendRegister()
+        {
+            PacketBuffer buffer = new PacketBuffer();
+            buffer.AddInteger((int)ClientPackets.CRegister);
+            buffer.AddString(Globals.regUsername);
+            buffer.AddString(Globals.regPassword);
+            buffer.AddString(Globals.regRepeatPassword);
 
             SendData(buffer.ToArray());
             buffer.Dispose();

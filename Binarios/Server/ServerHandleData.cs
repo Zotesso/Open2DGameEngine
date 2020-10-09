@@ -8,7 +8,8 @@ namespace Server
     {
         private delegate void Packet(int index, byte[] data);
         private static Dictionary<int, Packet> Packets;
-        
+        private Database db = new Database();
+
         public void InitializeMessages()
         {
             Packets = new Dictionary<int, Packet>();
@@ -17,6 +18,7 @@ namespace Server
 
             //Packets
             Packets.Add((int)ClientPackets.CLogin, HandleLogin);
+            Packets.Add((int)ClientPackets.CRegister, HandleRegister);
         }
 
         public void HandleNetworkMessages(int index, byte[] data)
@@ -37,7 +39,45 @@ namespace Server
 
         private void HandleLogin(int index, byte[] data)
         {
-            Console.WriteLine("Got Network Message.");
+            PacketBuffer buffer = new PacketBuffer();
+            buffer.AddByteArray(data);
+            buffer.GetInteger();
+
+            string username = buffer.GetString();
+            string password = buffer.GetString();
+
+            if (!db.AccountExist(username))
+            {
+                return;
+            }
+
+            if(!db.PasswordCheck(index, username, password))
+            {
+                return;
+            }
+
+            db.LoadPlayer(index, username);
+            Console.WriteLine("Player " + username + " Has logged in");
         }
+
+        private void HandleRegister(int index, byte[] data)
+        {
+            PacketBuffer buffer = new PacketBuffer();
+            buffer.AddByteArray(data);
+            buffer.GetInteger();
+
+            string username = buffer.GetString();
+            string password = buffer.GetString();
+
+            if (!db.AccountExist(username))
+            {
+                db.AddAcount(index, username, password);
+            }
+            else
+            {
+                Console.WriteLine("user already exist");
+            }
+        }
+
     }
 }

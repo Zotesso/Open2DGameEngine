@@ -20,6 +20,7 @@ namespace Server
             for (int i = 1; i < Constants.MAX_PLAYERS; i++)
             {
                 ServerTCP.Clients[i] = new Client();
+                Types.Player[i] = new Types.PlayerStruct();
 
             }
 

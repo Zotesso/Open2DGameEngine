@@ -18,6 +18,11 @@ namespace Client
         InterfaceGUI IGUI = new InterfaceGUI();
         private Desktop _desktop;
 
+        float WalkTimer;
+        public static new int Tick;
+        public static int ElapsedTime;
+        public static int FrameTime;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -33,7 +38,6 @@ namespace Client
             clientDataHandle = new ClientHandleData();
             clientDataHandle.InitializeMessages();
             ctcp.ConnectToServer();
-            //  ctcp.SendLogin();
 
             Graphics.InitializeGraphics(Content);
 
@@ -64,11 +68,32 @@ namespace Client
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.LightSkyBlue);
-            // TODO: Add your drawing code here
+
+            Tick = (int)gameTime.TotalGameTime.TotalMilliseconds;
+            ElapsedTime = (Tick - FrameTime);
+            FrameTime = Tick;
+
+            if(WalkTimer < Tick)
+            {
+                GameLogic.ProcessMovement();
+                WalkTimer = Tick + 30;
+            }
+
+            CheckKeys();
+            GameLogic.CheckMovement();
+
             _desktop.Render();
 
             Graphics.RenderGraphics();
             base.Draw(gameTime);
+        }
+
+        private void CheckKeys()
+        {
+            Globals.DirUp = Keyboard.GetState().IsKeyDown(Keys.Up);
+            Globals.DirDown = Keyboard.GetState().IsKeyDown(Keys.Down);
+            Globals.DirRight = Keyboard.GetState().IsKeyDown(Keys.Right);
+            Globals.DirLeft = Keyboard.GetState().IsKeyDown(Keys.Left);
         }
     }
 }

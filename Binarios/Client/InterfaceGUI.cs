@@ -11,6 +11,7 @@ namespace Client
     class InterfaceGUI
     {
         public static List<Panel> Windows = new List<Panel>();
+        private ClientTCP clienttcp = new ClientTCP();
 
         public void InitializeGUI(Game1 game, Desktop desktop)
         {
@@ -49,6 +50,11 @@ namespace Client
                 VerticalAlignment = VerticalAlignment.Center
             };
 
+            txtLogin.ValueChanging += (s, a) =>
+            {
+                Globals.loginUsername = a.NewValue;
+            };
+
             panel.Widgets.Add(txtLogin);
 
             Label lblPassword = new Label
@@ -71,6 +77,11 @@ namespace Client
                 VerticalAlignment = VerticalAlignment.Center
             };
 
+            txtPassword.ValueChanging += (s, a) =>
+            {
+                Globals.loginPassword = a.NewValue;
+
+            };
             panel.Widgets.Add(txtPassword);
 
             // Button
@@ -97,6 +108,20 @@ namespace Client
                 MenuManager.ChangeMenu(MenuManager.Menu.Register, desktop);
             };
 
+            sendLogin.Click += (s, a) =>
+            {
+                if(Globals.loginUsername == string.Empty || Globals.loginPassword == string.Empty)
+                {
+                    var messageBox = Dialog.CreateMessageBox("Sem dados", "Por favor, insira seu Login e sua Senha!");
+                    messageBox.ShowModal(desktop);
+
+                }
+                else
+                {
+                    clienttcp.SendLogin();
+                }
+            };
+                
             panel.Widgets.Add(register);
 
             CreateWindow(panel);
@@ -126,6 +151,13 @@ namespace Client
                 VerticalAlignment = VerticalAlignment.Center
             };
 
+
+            txtUsername.ValueChanging += (s, a) =>
+            {
+                Globals.regUsername = a.NewValue;
+
+            };
+
             panel.Widgets.Add(txtUsername);
 
             Label lblPassword = new Label
@@ -148,6 +180,11 @@ namespace Client
                 VerticalAlignment = VerticalAlignment.Center
             };
 
+            txtPassword.ValueChanging += (s, a) =>
+            {
+                Globals.regPassword = a.NewValue;
+            };
+
             panel.Widgets.Add(txtPassword);
 
             Label lblPasswordRepeat = new Label
@@ -168,6 +205,11 @@ namespace Client
                 Width = 200,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center
+            };
+
+            txtPasswordRepeat.ValueChanging += (s, a) =>
+            {
+                Globals.regRepeatPassword = a.NewValue;
             };
 
             panel.Widgets.Add(txtPasswordRepeat);
@@ -194,6 +236,30 @@ namespace Client
             back.Click += (s, a) =>
             {
                 MenuManager.ChangeMenu(MenuManager.Menu.Login, desktop);
+            };
+
+            sendRegister.Click += (s, a) =>
+            {
+                if (Globals.regUsername == string.Empty || Globals.regPassword == string.Empty || Globals.regRepeatPassword == string.Empty)
+                {
+                    var messageBox = Dialog.CreateMessageBox("Sem dados", "Por favor, insira seu Login e sua Senha!");
+                    messageBox.ShowModal(desktop);
+
+                }
+                else if(Globals.regPassword != Globals.regRepeatPassword)
+                {
+                    var messageBox = Dialog.CreateMessageBox("Digitou errado :(", "Repita a senha corretamente.");
+                    messageBox.ShowModal(desktop);
+                }
+                else if(Globals.regPassword.Length < 6 || Globals.regUsername.Length < 6) 
+                {
+                    var messageBox = Dialog.CreateMessageBox("Muito Curto", "Sua senha e Username devem ter pelomenos 6 digitos.");
+                    messageBox.ShowModal(desktop);
+                }
+                else
+                {
+                    clienttcp.SendRegister();
+                }
             };
 
             panel.Widgets.Add(back);

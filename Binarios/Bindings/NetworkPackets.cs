@@ -10,5 +10,6 @@ namespace Bindings
 
     public enum ClientPackets { 
         CLogin = 1,
+        CRegister,
     }
 }
