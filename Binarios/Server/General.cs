@@ -9,11 +9,12 @@ namespace Server
     {
         private ServerTCP stcp;
         private ServerHandleData handleServerData;
-
+        private Database db;
         public void InitializeServer()
         {
             stcp = new ServerTCP();
             handleServerData = new ServerHandleData();
+            db = new Database();
 
             handleServerData.InitializeMessages();
 
@@ -21,8 +22,14 @@ namespace Server
             {
                 ServerTCP.Clients[i] = new Client();
                 Types.Player[i] = new Types.PlayerStruct();
-
             }
+
+            for (int i = 1; i <Constants.MAX_MAPS; i++)
+            {
+                Types.Map[i] = new Types.MapStruct();
+            }
+
+            db.LoadMaps();
 
             stcp.InitializeNetwork();
             Console.WriteLine("Server has started");

@@ -8,6 +8,9 @@ namespace Client
     {
         public static Rectangle Camera;
         public static Types.RECT TileView;
+        public static bool InGame;
+
+        public static int playerIndex;
 
         public static string loginUsername = "";
         public static string loginPassword = "";

@@ -5,7 +5,7 @@ using System.Text;
 namespace Bindings
 {
     public enum ServerPackets { 
-    
+        SJoinGame = 1,
     }
 
     public enum ClientPackets { 

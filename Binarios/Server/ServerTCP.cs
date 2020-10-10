@@ -10,7 +10,7 @@ namespace Server
     {
         public static Client[] Clients = new Client[Constants.MAX_PLAYERS];
         public TcpListener ServerSocket;
-
+        public static NetworkStream clientStream;
         public void InitializeNetwork()
         {
             ServerSocket = new TcpListener(IPAddress.Any, 5555);
@@ -37,6 +37,15 @@ namespace Server
                     return;
                 }
             }
+        }
+
+        public void SendData(int index, byte[] data)
+        {
+            PacketBuffer buffer = new PacketBuffer();
+            buffer.AddByteArray(data);
+            clientStream = Clients[index].Socket.GetStream();
+            clientStream.Write(buffer.ToArray(), 0, buffer.ToArray().Length);
+            buffer.Dispose();
         }
     }
 }

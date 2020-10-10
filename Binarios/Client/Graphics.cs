@@ -11,15 +11,20 @@ namespace Client
     class Graphics
     {
         public static Texture2D[] Characters = new Texture2D[3];
-        
+        public static Texture2D[] Tilesets = new Texture2D[3];
+
         public static void InitializeGraphics(ContentManager manager)
         {
             LoadCharacters(manager);
+            LoadTilesets(manager);
         }
 
         public static void RenderGraphics()
         {
+
+            
             Game1._spriteBatch.Begin();
+            DrawMapGrid();
             DrawPlayer();
             Game1._spriteBatch.End();
         }
@@ -29,6 +34,14 @@ namespace Client
             for(int i = 1; i < Characters.Length; i++)
             {
                 Characters[i] = manager.Load<Texture2D>("Characters/" + i.ToString());
+            }
+        }
+
+        private static void LoadTilesets(ContentManager manager)
+        {
+            for(int i = 1; i < Tilesets.Length; i++)
+            {
+                Tilesets[i] = manager.Load<Texture2D>("Tilesets/" + i.ToString());
             }
         }
 
@@ -51,6 +64,15 @@ namespace Client
             Game1._spriteBatch.Draw(Characters[sprite], new Vector2(X, Y), srcrec, Color.White);
         }
 
+        private static void DrawTile(int tilesetNum, int x2, int y2, Rectangle srcrec)
+        {
+            int X, Y;
+            X = ConvertMapX(x2);
+            Y = ConvertMapY(y2);
+
+            Game1._spriteBatch.Draw(Tilesets[tilesetNum], new Vector2(X, Y), srcrec, Color.White);
+        }
+
         private static void DrawPlayer()
         {
             byte anim;
@@ -64,34 +86,53 @@ namespace Client
 
             anim = 1;
 
-            switch (Types.Player[0].Dir) {
+            switch (Types.Player[Globals.playerIndex].Dir) {
                 case Constants.DIR_UP:
                     spriteLeft = 3;
-                    if (Types.Player[0].YOffset > 8)
-                        anim = Types.Player[0].Steps;
+                    if (Types.Player[Globals.playerIndex].YOffset > 8)
+                        anim = Types.Player[Globals.playerIndex].Steps;
                     break;
                case Constants.DIR_DOWN:
                     spriteLeft = 0;
-                    if (Types.Player[0].YOffset < -8)
-                        anim = Types.Player[0].Steps;
+                    if (Types.Player[Globals.playerIndex].YOffset < -8)
+                        anim = Types.Player[Globals.playerIndex].Steps;
                     break;
                case Constants.DIR_LEFT:
                     spriteLeft = 1;
-                    if (Types.Player[0].XOffset > 8)
-                        anim = Types.Player[0].Steps;
+                    if (Types.Player[Globals.playerIndex].XOffset > 8)
+                        anim = Types.Player[Globals.playerIndex].Steps;
                     break;
                case Constants.DIR_RIGHT:
                     spriteLeft = 2;
-                    if (Types.Player[0].XOffset < -8)
-                        anim = Types.Player[0].Steps;
+                    if (Types.Player[Globals.playerIndex].XOffset < -8)
+                        anim = Types.Player[Globals.playerIndex].Steps;
                     break;
             }
 
             srcrec = new Rectangle((anim) * (Characters[SpriteNum].Width / 12), spriteLeft * (Characters[SpriteNum].Height / 8), Characters[SpriteNum].Width / 12, Characters[SpriteNum].Height / 8);
-            X = Types.Player[0].X * 32 + Types.Player[0].XOffset - ((Characters[SpriteNum].Width / 12 - 32) /2);
-            Y = Types.Player[0].Y * 32 + Types.Player[0].YOffset;
+            X = Types.Player[Globals.playerIndex].X * 32 + Types.Player[Globals.playerIndex].XOffset - ((Characters[SpriteNum].Width / 12 - 32) /2);
+            Y = Types.Player[Globals.playerIndex].Y * 32 + Types.Player[Globals.playerIndex].YOffset;
 
             DrawSprite(SpriteNum, X, Y, srcrec);
+        }
+
+        private static void DrawMapGrid()
+        {
+            int tileNum;
+            Rectangle srcrec;
+
+            tileNum = 1;
+
+            for(int x = 0; x < Constants.MAX_MAP_X; x++)
+            {
+                for(int y = 0; y < Constants.MAX_MAP_Y; y++)
+                {
+                    srcrec = new Rectangle(0, 0, 32, 32);
+                    int xPos = x * 32;
+                    int yPos = y * 32;
+                    DrawTile(tileNum, xPos, yPos, srcrec);
+                }
+            }
         }
     }
 }

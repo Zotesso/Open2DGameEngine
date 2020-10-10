@@ -57,6 +57,7 @@ namespace Server
             }
 
             db.LoadPlayer(index, username);
+            GameLogic.JoinGame(index);
             Console.WriteLine("Player " + username + " Has logged in");
         }
 

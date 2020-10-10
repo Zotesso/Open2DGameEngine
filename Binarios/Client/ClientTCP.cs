@@ -13,6 +13,8 @@ namespace Client
         private bool connecting;
         private bool connected;
 
+        public static Types.PlayerStruct[] Player = new Types.PlayerStruct[Constants.MAX_PLAYERS];
+        public static Types.MapStruct[] Map = new Types.MapStruct[Constants.MAX_MAPS];
         public void ConnectToServer()
         {
             if(PlayerSocket != null)
@@ -68,7 +70,7 @@ namespace Client
                 return;
             }
 
-            clientDataHandle.HandleNetworkMessages(myBytes);
+            clientDataHandle.HandleNetworkMessages(0, myBytes);
             myStream.BeginRead(asyncBuff, 0, 8192, OnReceive, null);
         }
 

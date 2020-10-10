@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Bindings;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Myra;
@@ -16,7 +17,7 @@ namespace Client
         ClientHandleData clientDataHandle;
 
         InterfaceGUI IGUI = new InterfaceGUI();
-        private Desktop _desktop;
+        public static Desktop _desktop;
 
         float WalkTimer;
         public static new int Tick;
@@ -38,6 +39,11 @@ namespace Client
             clientDataHandle = new ClientHandleData();
             clientDataHandle.InitializeMessages();
             ctcp.ConnectToServer();
+
+            for (int i = 1; i < Constants.MAX_PLAYERS; i++)
+            {
+                Types.Player[i] = new Types.PlayerStruct();
+            }
 
             Graphics.InitializeGraphics(Content);
 
@@ -68,23 +74,25 @@ namespace Client
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.LightSkyBlue);
-
-            Tick = (int)gameTime.TotalGameTime.TotalMilliseconds;
-            ElapsedTime = (Tick - FrameTime);
-            FrameTime = Tick;
-
-            if(WalkTimer < Tick)
+            if (Globals.InGame)
             {
-                GameLogic.ProcessMovement();
-                WalkTimer = Tick + 30;
-            }
+                Tick = (int)gameTime.TotalGameTime.TotalMilliseconds;
+                ElapsedTime = (Tick - FrameTime);
+                FrameTime = Tick;
 
-            CheckKeys();
-            GameLogic.CheckMovement();
+                if (WalkTimer < Tick)
+                {
+                    GameLogic.ProcessMovement();
+                    WalkTimer = Tick + 30;
+                }
+
+                CheckKeys();
+                GameLogic.CheckMovement();
+                Graphics.RenderGraphics();
+            }
 
             _desktop.Render();
 
-            Graphics.RenderGraphics();
             base.Draw(gameTime);
         }
 

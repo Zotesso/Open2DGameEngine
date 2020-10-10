@@ -1,11 +1,11 @@
 ﻿using System;
 using Bindings;
+using Myra.Graphics2D.UI;
 
 namespace Client
 {
     class GameLogic
     {
-
         public static bool IsTryingToMove()
         {
             if(Globals.DirUp || Globals.DirRight || Globals.DirLeft || Globals.DirDown)
@@ -20,28 +20,28 @@ namespace Client
 
         public static bool CanMove()
         {
-            if(Types.Player[0].Moving != 0)
+            if(Types.Player[Globals.playerIndex].Moving != 0)
             {
                 return false;
             }
 
-            int dir = Types.Player[0].Dir;
+            int dir = Types.Player[Globals.playerIndex].Dir;
 
             if (Globals.DirUp)
             {
-                Types.Player[0].Dir = Constants.DIR_UP;
+                Types.Player[Globals.playerIndex].Dir = Constants.DIR_UP;
             }
             if (Globals.DirDown)
             {
-                Types.Player[0].Dir = Constants.DIR_DOWN;
+                Types.Player[Globals.playerIndex].Dir = Constants.DIR_DOWN;
             }
             if (Globals.DirRight)
             {
-                Types.Player[0].Dir = Constants.DIR_RIGHT;
+                Types.Player[Globals.playerIndex].Dir = Constants.DIR_RIGHT;
             }
             if (Globals.DirLeft)
             {
-                Types.Player[0].Dir = Constants.DIR_LEFT;
+                Types.Player[Globals.playerIndex].Dir = Constants.DIR_LEFT;
             }
 
             return true;
@@ -54,20 +54,20 @@ namespace Client
             switch (direction)
             {
                 case Constants.DIR_UP:
-                    X = Types.Player[0].X;
-                    Y = Types.Player[0].Y - 1;
+                    X = Types.Player[Globals.playerIndex].X;
+                    Y = Types.Player[Globals.playerIndex].Y - 1;
                     break;
                 case Constants.DIR_DOWN:
-                    X = Types.Player[0].X;
-                    Y = Types.Player[0].Y + 1;
+                    X = Types.Player[Globals.playerIndex].X;
+                    Y = Types.Player[Globals.playerIndex].Y + 1;
                     break;
                 case Constants.DIR_LEFT:
-                    X = Types.Player[0].X - 1;
-                    Y = Types.Player[0].Y;
+                    X = Types.Player[Globals.playerIndex].X - 1;
+                    Y = Types.Player[Globals.playerIndex].Y;
                     break;
                 case Constants.DIR_RIGHT:
-                    X = Types.Player[0].X + 1;
-                    Y = Types.Player[0].Y;
+                    X = Types.Player[Globals.playerIndex].X + 1;
+                    Y = Types.Player[Globals.playerIndex].Y;
                     break;
             }
 
@@ -80,24 +80,24 @@ namespace Client
             {
                 if (CanMove())
                 {
-                    Types.Player[0].Moving = 1;
-                    switch (Types.Player[0].Dir)
+                    Types.Player[Globals.playerIndex].Moving = 1;
+                    switch (Types.Player[Globals.playerIndex].Dir)
                     {
                         case Constants.DIR_UP:
-                            Types.Player[0].YOffset = 32;
-                            Types.Player[0].Y -= 1;
+                            Types.Player[Globals.playerIndex].YOffset = 32;
+                            Types.Player[Globals.playerIndex].Y -= 1;
                             break;
                         case Constants.DIR_DOWN:
-                            Types.Player[0].YOffset = (32 * -1);
-                            Types.Player[0].Y += 1;
+                            Types.Player[Globals.playerIndex].YOffset = (32 * -1);
+                            Types.Player[Globals.playerIndex].Y += 1;
                             break;
                         case Constants.DIR_LEFT:
-                            Types.Player[0].XOffset = 32;
-                            Types.Player[0].X -= 1;
+                            Types.Player[Globals.playerIndex].XOffset = 32;
+                            Types.Player[Globals.playerIndex].X -= 1;
                             break;
                         case Constants.DIR_RIGHT:
-                            Types.Player[0].XOffset = (32 * -1);
-                            Types.Player[0].X += 1;
+                            Types.Player[Globals.playerIndex].XOffset = (32 * -1);
+                            Types.Player[Globals.playerIndex].X += 1;
                             break;
                     }
                 }
@@ -106,71 +106,78 @@ namespace Client
 
         public static void ProcessMovement()
         {
-            int movementSpeed = (Types.Player[0].Moving * 6);
+            int movementSpeed = (Types.Player[Globals.playerIndex].Moving * 6);
 
-            switch (Types.Player[0].Dir) {
+            switch (Types.Player[Globals.playerIndex].Dir) {
                 case Constants.DIR_UP:
-                    Types.Player[0].YOffset -= movementSpeed;
-                    if(Types.Player[0].YOffset < 0){
-                        Types.Player[0].YOffset = 0;
+                    Types.Player[Globals.playerIndex].YOffset -= movementSpeed;
+                    if(Types.Player[Globals.playerIndex].YOffset < 0){
+                        Types.Player[Globals.playerIndex].YOffset = 0;
                     }
                     break;
                 case Constants.DIR_DOWN:
-                    Types.Player[0].YOffset += movementSpeed;
-                    if (Types.Player[0].YOffset > 0)
+                    Types.Player[Globals.playerIndex].YOffset += movementSpeed;
+                    if (Types.Player[Globals.playerIndex].YOffset > 0)
                     { 
-                        Types.Player[0].YOffset = 0;
+                        Types.Player[Globals.playerIndex].YOffset = 0;
                     }
                     break;
                 case Constants.DIR_LEFT:
-                    Types.Player[0].XOffset -= movementSpeed;
-                    if (Types.Player[0].XOffset < 0)
+                    Types.Player[Globals.playerIndex].XOffset -= movementSpeed;
+                    if (Types.Player[Globals.playerIndex].XOffset < 0)
                     {
-                        Types.Player[0].XOffset = 0;
+                        Types.Player[Globals.playerIndex].XOffset = 0;
                     }
                     break;
                 case Constants.DIR_RIGHT:
-                    Types.Player[0].XOffset += movementSpeed;
-                    if (Types.Player[0].XOffset > 0)
+                    Types.Player[Globals.playerIndex].XOffset += movementSpeed;
+                    if (Types.Player[Globals.playerIndex].XOffset > 0)
                     {
-                        Types.Player[0].XOffset = 0;
+                        Types.Player[Globals.playerIndex].XOffset = 0;
                     }
                     break;
             }
 
-            if(Types.Player[0].Moving > 0)
+            if(Types.Player[Globals.playerIndex].Moving > 0)
             {
-                if(Types.Player[0].Dir == Constants.DIR_RIGHT || Types.Player[0].Dir == Constants.DIR_DOWN)
+                if(Types.Player[Globals.playerIndex].Dir == Constants.DIR_RIGHT || Types.Player[Globals.playerIndex].Dir == Constants.DIR_DOWN)
                 {
-                    if(Types.Player[0].XOffset >= 0 && Types.Player[0].YOffset >= 0)
+                    if(Types.Player[Globals.playerIndex].XOffset >= 0 && Types.Player[Globals.playerIndex].YOffset >= 0)
                     {
-                        Types.Player[0].Moving = 0;
-                        if(Types.Player[0].Steps == 0)
+                        Types.Player[Globals.playerIndex].Moving = 0;
+                        if(Types.Player[Globals.playerIndex].Steps == 0)
                         {
-                            Types.Player[0].Steps = 2;
+                            Types.Player[Globals.playerIndex].Steps = 2;
                         }
                         else
                         {
-                            Types.Player[0].Steps = 0;
+                            Types.Player[Globals.playerIndex].Steps = 0;
                         }
                     }
                 }
                 else
                 {
-                    if (Types.Player[0].XOffset <= 0 && Types.Player[0].YOffset <= 0)
+                    if (Types.Player[Globals.playerIndex].XOffset <= 0 && Types.Player[Globals.playerIndex].YOffset <= 0)
                     {
-                        Types.Player[0].Moving = 0;
-                        if (Types.Player[0].Steps == 0)
+                        Types.Player[Globals.playerIndex].Moving = 0;
+                        if (Types.Player[Globals.playerIndex].Steps == 0)
                         {
-                            Types.Player[0].Steps = 2;
+                            Types.Player[Globals.playerIndex].Steps = 2;
                         }
                         else
                         {
-                            Types.Player[0].Steps = 0;
+                            Types.Player[Globals.playerIndex].Steps = 0;
                         }
                     }
                 }
             }
+        }
+
+        public static void InGame()
+        {
+            var messageBox = Dialog.CreateMessageBox("Digitou errado :(", Globals.playerIndex.ToString());
+            messageBox.ShowModal(Game1._desktop);
+            Globals.InGame = true;
         }
     }
 }

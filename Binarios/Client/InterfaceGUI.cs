@@ -19,6 +19,7 @@ namespace Client
 
             CreateWindow_Login(desktop);
             CreateWindow_Register(desktop);
+            CreateWindow_InGame();
         }
 
         public void CreateWindow(Panel panel)
@@ -263,6 +264,24 @@ namespace Client
             };
 
             panel.Widgets.Add(back);
+            CreateWindow(panel);
+        }
+
+        public void CreateWindow_InGame()
+        {
+
+            Panel panel = new Panel();
+
+            Label lblLogin = new Label
+            {
+                Id = "lblLogin",
+                Text = "Login:",
+                TextColor = Color.Black,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            panel.Widgets.Add(lblLogin);
             CreateWindow(panel);
         }
     }
