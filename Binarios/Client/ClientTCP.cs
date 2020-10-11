@@ -1,6 +1,7 @@
 ﻿using System;
 using Bindings;
 using System.Net.Sockets;
+using Myra.Graphics2D.UI;
 
 namespace Client
 {
@@ -74,6 +75,17 @@ namespace Client
             myStream.BeginRead(asyncBuff, 0, 8192, OnReceive, null);
         }
 
+        public static bool IsPlaying(int index)
+        {
+
+            if(Types.Player[index].Name != null) 
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public void SendData(byte[] data)
         {
             PacketBuffer buffer = new PacketBuffer();
@@ -100,6 +112,18 @@ namespace Client
             buffer.AddString(Globals.regUsername);
             buffer.AddString(Globals.regPassword);
             buffer.AddString(Globals.regRepeatPassword);
+
+            SendData(buffer.ToArray());
+            buffer.Dispose();
+        }
+
+        public void SendPlayerMove()
+        {
+            PacketBuffer buffer = new PacketBuffer();
+            buffer.AddInteger((int)ClientPackets.CPlayerMove);
+
+            buffer.AddByte(Types.Player[Globals.playerIndex].Dir);
+            buffer.AddInteger(Types.Player[Globals.playerIndex].Moving);
 
             SendData(buffer.ToArray());
             buffer.Dispose();

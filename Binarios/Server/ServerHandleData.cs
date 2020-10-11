@@ -1,5 +1,5 @@
-﻿using System;
-using Bindings;
+﻿using Bindings;
+using System;
 using System.Collections.Generic;
 
 namespace Server
@@ -19,6 +19,7 @@ namespace Server
             //Packets
             Packets.Add((int)ClientPackets.CLogin, HandleLogin);
             Packets.Add((int)ClientPackets.CRegister, HandleRegister);
+            Packets.Add((int)ClientPackets.CPlayerMove, HandlePlayerMovement);
         }
 
         public void HandleNetworkMessages(int index, byte[] data)
@@ -80,5 +81,16 @@ namespace Server
             }
         }
 
+        private void HandlePlayerMovement(int index, byte[] data)
+        {
+            PacketBuffer buffer = new PacketBuffer();
+            buffer.AddByteArray(data);
+            buffer.GetInteger();
+
+            byte dir = buffer.GetByte();
+            int moving = buffer.GetInteger();
+
+            GameLogic.PlayerMove(index, dir, moving);
+        }
     }
 }

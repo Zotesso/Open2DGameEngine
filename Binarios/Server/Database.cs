@@ -48,25 +48,26 @@ namespace Server
         public void AddAcount(int index, string name, string password)
         {
             ClearPlayer(index);
-            Types.Player[index].Login = name;
-            Types.Player[index].Password = password;
+            Types.Player[index - 1].Login = name;
+            Types.Player[index - 1].Password = password;
+            Types.Player[index - 1].Name = name;
 
             SavePlayer(index);
         }
         
         public void ClearPlayer(int index)
         {
-            Types.Player[index].Login = "";
-            Types.Player[index].Password = "";
-            Types.Player[index].Name = "";
+            Types.Player[index - 1].Login = "";
+            Types.Player[index - 1].Password = "";
+            Types.Player[index - 1].Name = "";
         }
 
         public void SavePlayer(int index)
         {
-            string filename = "Data/Accounts/" + Types.Player[index].Login + ".acc";
+            string filename = "Data/Accounts/" + Types.Player[index - 1].Login + ".acc";
             BinaryFormatter binFormat = new BinaryFormatter();
             FileStream fs = new FileStream(filename, FileMode.OpenOrCreate);
-            binFormat.Serialize(fs, Types.Player[index]);
+            binFormat.Serialize(fs, Types.Player[index - 1]);
             fs.Close();
         }
 
@@ -75,7 +76,7 @@ namespace Server
             string filename = "Data/Accounts/" + name + ".acc";
             BinaryFormatter binFormat = new BinaryFormatter();
             FileStream fs = new FileStream(filename, FileMode.Open);
-            Types.Player[index] = (Types.PlayerStruct)binFormat.Deserialize(fs);
+            Types.Player[index - 1] = (Types.PlayerStruct)binFormat.Deserialize(fs);
             fs.Close();
         }
 

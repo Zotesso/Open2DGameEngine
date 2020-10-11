@@ -25,7 +25,16 @@ namespace Client
             
             Game1._spriteBatch.Begin();
             DrawMapGrid();
-            DrawPlayer();
+            for (int i = 0; i < Constants.MAX_PLAYERS; i++)
+            {
+                if (ClientTCP.IsPlaying(i))
+                {
+                    if (Types.Player[i].Map == Types.Player[Globals.playerIndex].Map)
+                    {
+                        DrawPlayer(i);
+                    }
+                }
+            }
             Game1._spriteBatch.End();
         }
 
@@ -73,7 +82,7 @@ namespace Client
             Game1._spriteBatch.Draw(Tilesets[tilesetNum], new Vector2(X, Y), srcrec, Color.White);
         }
 
-        private static void DrawPlayer()
+        private static void DrawPlayer(int index)
         {
             byte anim;
             int X, Y;
@@ -86,32 +95,32 @@ namespace Client
 
             anim = 1;
 
-            switch (Types.Player[Globals.playerIndex].Dir) {
+            switch (Types.Player[index].Dir) {
                 case Constants.DIR_UP:
                     spriteLeft = 3;
-                    if (Types.Player[Globals.playerIndex].YOffset > 8)
-                        anim = Types.Player[Globals.playerIndex].Steps;
+                    if (Types.Player[index].YOffset > 8)
+                        anim = Types.Player[index].Steps;
                     break;
                case Constants.DIR_DOWN:
                     spriteLeft = 0;
-                    if (Types.Player[Globals.playerIndex].YOffset < -8)
-                        anim = Types.Player[Globals.playerIndex].Steps;
+                    if (Types.Player[index].YOffset < -8)
+                        anim = Types.Player[index].Steps;
                     break;
                case Constants.DIR_LEFT:
                     spriteLeft = 1;
-                    if (Types.Player[Globals.playerIndex].XOffset > 8)
-                        anim = Types.Player[Globals.playerIndex].Steps;
+                    if (Types.Player[index].XOffset > 8)
+                        anim = Types.Player[index].Steps;
                     break;
                case Constants.DIR_RIGHT:
                     spriteLeft = 2;
-                    if (Types.Player[Globals.playerIndex].XOffset < -8)
-                        anim = Types.Player[Globals.playerIndex].Steps;
+                    if (Types.Player[index].XOffset < -8)
+                        anim = Types.Player[index].Steps;
                     break;
             }
 
             srcrec = new Rectangle((anim) * (Characters[SpriteNum].Width / 12), spriteLeft * (Characters[SpriteNum].Height / 8), Characters[SpriteNum].Width / 12, Characters[SpriteNum].Height / 8);
-            X = Types.Player[Globals.playerIndex].X * 32 + Types.Player[Globals.playerIndex].XOffset - ((Characters[SpriteNum].Width / 12 - 32) /2);
-            Y = Types.Player[Globals.playerIndex].Y * 32 + Types.Player[Globals.playerIndex].YOffset;
+            X = Types.Player[index].X * 32 + Types.Player[index].XOffset - ((Characters[SpriteNum].Width / 12 - 32) /2);
+            Y = Types.Player[index].Y * 32 + Types.Player[index].YOffset;
 
             DrawSprite(SpriteNum, X, Y, srcrec);
         }

@@ -6,6 +6,9 @@ namespace Client
 {
     class GameLogic
     {
+
+        private static ClientTCP clienttcp = new ClientTCP();
+
         public static bool IsTryingToMove()
         {
             if(Globals.DirUp || Globals.DirRight || Globals.DirLeft || Globals.DirDown)
@@ -84,18 +87,24 @@ namespace Client
                     switch (Types.Player[Globals.playerIndex].Dir)
                     {
                         case Constants.DIR_UP:
+                            clienttcp.SendPlayerMove();
                             Types.Player[Globals.playerIndex].YOffset = 32;
                             Types.Player[Globals.playerIndex].Y -= 1;
                             break;
                         case Constants.DIR_DOWN:
+                            clienttcp.SendPlayerMove();
+
                             Types.Player[Globals.playerIndex].YOffset = (32 * -1);
                             Types.Player[Globals.playerIndex].Y += 1;
                             break;
                         case Constants.DIR_LEFT:
+                            clienttcp.SendPlayerMove();
+
                             Types.Player[Globals.playerIndex].XOffset = 32;
                             Types.Player[Globals.playerIndex].X -= 1;
                             break;
                         case Constants.DIR_RIGHT:
+                            clienttcp.SendPlayerMove();
                             Types.Player[Globals.playerIndex].XOffset = (32 * -1);
                             Types.Player[Globals.playerIndex].X += 1;
                             break;
@@ -175,8 +184,6 @@ namespace Client
 
         public static void InGame()
         {
-            var messageBox = Dialog.CreateMessageBox("Digitou errado :(", Globals.playerIndex.ToString());
-            messageBox.ShowModal(Game1._desktop);
             Globals.InGame = true;
         }
     }
