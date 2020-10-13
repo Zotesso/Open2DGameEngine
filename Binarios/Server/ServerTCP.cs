@@ -101,5 +101,31 @@ namespace Server
             SendDataToMap(Types.Player[index - 1].Map, buffer.ToArray());
             buffer.Dispose();
         }
+
+        public void SendJoinMap(int index)
+        {
+            for (int i = 1; i < Constants.MAX_PLAYERS; i++)
+            {
+                if(isConnected(i) && i != index && Types.Player[i].Map == Types.Player[index].Map)
+                {
+                    PacketBuffer buffer = new PacketBuffer();
+                    buffer.AddInteger((int)ServerPackets.SPlayerData);
+                    buffer.AddInteger(i - 1);
+
+                    buffer.AddString(Types.Player[i - 1].Name);
+                    buffer.AddInteger(Types.Player[i - 1].Map);
+                    buffer.AddInteger(Types.Player[i - 1].Level);
+                    buffer.AddInteger(Types.Player[i - 1].EXP);
+                    buffer.AddByte(Types.Player[i - 1].Dir);
+                    buffer.AddInteger(Types.Player[i - 1].X);
+                    buffer.AddInteger(Types.Player[i - 1].Y);
+
+                    SendData(index, buffer.ToArray());
+                    buffer.Dispose();
+                }
+            }
+
+            SendPlayerData(index);
+        }
     }
 }

@@ -18,9 +18,11 @@ namespace Server
             buffer.AddInteger(Types.Player[index - 1].Map);
 
             stcp.SendData(index, buffer.ToArray());
-            stcp.SendPlayerData(index);
 
             buffer.Dispose();
+
+            stcp.SendJoinMap(index);
+            stcp.SendPlayerData(index);
         }
 
         public static void PlayerMove(int index, byte dir, int movement)
