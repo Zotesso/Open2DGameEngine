@@ -80,17 +80,23 @@ namespace Client
             {
                 case Constants.DIR_UP:
                     Types.Player[targetIndex].YOffset = 32;
+                    Types.Player[targetIndex].Y -= 1;
                     break;
                 case Constants.DIR_DOWN:
                     Types.Player[targetIndex].YOffset = 32 * -1;
+                    Types.Player[targetIndex].Y += 1;
                     break;
                 case Constants.DIR_LEFT:
                     Types.Player[targetIndex].XOffset = 32;
+                    Types.Player[targetIndex].X -= 1;
                     break;
                 case Constants.DIR_RIGHT:
                     Types.Player[targetIndex].XOffset = 32 * -1;
+                    Types.Player[targetIndex].X += 1;
                     break;
             }
+
+            GameLogic.ProcessMovement(targetIndex);
         }
 
         private void HandlePlayerData(int index, byte[] data)
@@ -118,10 +124,6 @@ namespace Client
             Types.Player[targetIndex].Map = targetMap;
             Types.Player[targetIndex].Level = targetLevel;
             Types.Player[targetIndex].EXP = targetEXP;
-
-            var messageBox = Dialog.CreateMessageBox("Digitou errado :(", targetIndex.ToString());
-            messageBox.ShowModal(Game1._desktop);
-
         }
     }
 }

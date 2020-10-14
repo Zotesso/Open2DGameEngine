@@ -40,10 +40,7 @@ namespace Client
             clientDataHandle.InitializeMessages();
             ctcp.ConnectToServer();
 
-            for (int i = 1; i < Constants.MAX_PLAYERS; i++)
-            {
-                Types.Player[i] = new Types.PlayerStruct();
-            }
+    
 
             Graphics.InitializeGraphics(Content);
 
@@ -82,7 +79,7 @@ namespace Client
 
                 if (WalkTimer < Tick)
                 {
-                    GameLogic.ProcessMovement();
+                    GameLogic.ProcessMovement(Globals.playerIndex);
                     WalkTimer = Tick + 30;
                 }
 

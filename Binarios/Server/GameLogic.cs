@@ -6,23 +6,24 @@ namespace Server
 {
     class GameLogic
     {
-        private static ServerTCP stcp;
+        private static ServerTCP stcp = new ServerTCP();
 
         public static void JoinGame(int index)
         {
-            stcp = new ServerTCP();
+            Console.WriteLine(Types.Player[1].X.ToString());
+            PlayerWarp(index, Types.Player[index].Map, Types.Player[index].X, Types.Player[index].Y);
+
             PacketBuffer buffer = new PacketBuffer();
             buffer.AddInteger((int)ServerPackets.SJoinGame);
             buffer.AddInteger(index - 1);
-            buffer.AddString(Types.Player[index - 1].Name);
-            buffer.AddInteger(Types.Player[index - 1].Map);
+            buffer.AddString(Types.Player[index].Name);
+            buffer.AddInteger(Types.Player[index].Map);
 
             stcp.SendData(index, buffer.ToArray());
 
             buffer.Dispose();
-
             stcp.SendJoinMap(index);
-            stcp.SendPlayerData(index);
+            Console.WriteLine("aqui acheg1o2");
         }
 
         public static void PlayerMove(int index, byte dir, int movement)
@@ -36,7 +37,6 @@ namespace Server
                 Types.Player[index].X = x;
                 Types.Player[index].Y = y;
 
-                stcp = new ServerTCP();
                 PacketBuffer buffer = new PacketBuffer();
                 buffer.AddInteger((int)ServerPackets.SPlayerMove);
                 buffer.AddInteger(index - 1);
@@ -47,7 +47,16 @@ namespace Server
 
                 stcp.SendDataToMapBut(index, Types.Player[index].Map ,buffer.ToArray());
                 buffer.Dispose();
+
+                Console.WriteLine("Player index = " + index.ToString());
+                Console.WriteLine(Types.Player[1].X);
             }
+        }
+
+        public static void PlayerWarp(int index, int mapNum, int x, int y)
+        {
+            Types.Player[index].X = x;
+            Types.Player[index].Y = y;
         }
         
         public static void SetPlayerDir(int index, byte dir)

@@ -90,15 +90,15 @@ namespace Server
             buffer.AddInteger((int)ServerPackets.SPlayerData);
             buffer.AddInteger(index - 1);
 
-            buffer.AddString(Types.Player[index - 1].Name);
-            buffer.AddInteger(Types.Player[index - 1].Map);
-            buffer.AddInteger(Types.Player[index - 1].Level);
-            buffer.AddInteger(Types.Player[index - 1].EXP);
-            buffer.AddByte(Types.Player[index - 1].Dir);
-            buffer.AddInteger(Types.Player[index - 1].X);
-            buffer.AddInteger(Types.Player[index - 1].Y);
+            buffer.AddString(Types.Player[index].Name);
+            buffer.AddInteger(Types.Player[index].Map);
+            buffer.AddInteger(Types.Player[index].Level);
+            buffer.AddInteger(Types.Player[index].EXP);
+            buffer.AddByte(Types.Player[index].Dir);
+            buffer.AddInteger(Types.Player[index].X);
+            buffer.AddInteger(Types.Player[index].Y);
 
-            SendDataToMap(Types.Player[index - 1].Map, buffer.ToArray());
+            SendDataToMap(Types.Player[index].Map, buffer.ToArray());
             buffer.Dispose();
         }
 
@@ -112,13 +112,16 @@ namespace Server
                     buffer.AddInteger((int)ServerPackets.SPlayerData);
                     buffer.AddInteger(i - 1);
 
-                    buffer.AddString(Types.Player[i - 1].Name);
-                    buffer.AddInteger(Types.Player[i - 1].Map);
-                    buffer.AddInteger(Types.Player[i - 1].Level);
-                    buffer.AddInteger(Types.Player[i - 1].EXP);
-                    buffer.AddByte(Types.Player[i - 1].Dir);
-                    buffer.AddInteger(Types.Player[i - 1].X);
-                    buffer.AddInteger(Types.Player[i - 1].Y);
+                    buffer.AddString(Types.Player[i].Name);
+                    buffer.AddInteger(Types.Player[i].Map);
+                    buffer.AddInteger(Types.Player[i].Level);
+                    buffer.AddInteger(Types.Player[i].EXP);
+                    buffer.AddByte(Types.Player[i].Dir);
+                    buffer.AddInteger(Types.Player[i].X);
+                    buffer.AddInteger(Types.Player[i].Y);
+
+                    Console.WriteLine(i.ToString());
+                    Console.WriteLine(Types.Player[0].X.ToString());
 
                     SendData(index, buffer.ToArray());
                     buffer.Dispose();
