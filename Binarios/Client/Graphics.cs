@@ -56,12 +56,22 @@ namespace Client
 
         public static int ConvertMapX(int x)
         {
-            return x - (Globals.TileView.left * 32) - Globals.Camera.Left;
+            int cameraLeft = 0;
+            int tileViewLeft = 0;
+
+           cameraLeft = Types.Player[Globals.playerIndex].X  + Types.Player[Globals.playerIndex].XOffset;
+           tileViewLeft = Types.Player[Globals.playerIndex].X - 5;
+            return x - (tileViewLeft * 32) - cameraLeft;
         }
 
         public static int ConvertMapY(int y)
         {
-            return y - (Globals.TileView.top * 32) - Globals.Camera.Top;
+            int cameraTop = 0;
+            int tileViewTop = 0;
+
+            cameraTop = Types.Player[Globals.playerIndex].Y + Types.Player[Globals.playerIndex].YOffset;
+            tileViewTop = Types.Player[Globals.playerIndex].Y - 5;
+            return y - (tileViewTop * 32) - cameraTop;
         }
 
         private static void DrawSprite(int sprite, int x2, int y2, Rectangle srcrec)
