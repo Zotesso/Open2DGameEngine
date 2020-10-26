@@ -30,24 +30,32 @@ namespace Client
 
             int dir = Types.Player[Globals.playerIndex].Dir;
 
-            if (Globals.DirUp)
+            if (Globals.DirUp && Types.Player[Globals.playerIndex].Y > 0)
             {
                 Types.Player[Globals.playerIndex].Dir = Constants.DIR_UP;
+                return true;
+
             }
-            if (Globals.DirDown)
+            if (Globals.DirDown && Types.Player[Globals.playerIndex].Y < Constants.MAX_MAP_Y)
             {
                 Types.Player[Globals.playerIndex].Dir = Constants.DIR_DOWN;
+                return true;
+
             }
-            if (Globals.DirRight)
+            if (Globals.DirRight && Types.Player[Globals.playerIndex].X < Constants.MAX_MAP_X)
             {
                 Types.Player[Globals.playerIndex].Dir = Constants.DIR_RIGHT;
+                return true;
+
             }
-            if (Globals.DirLeft)
+            if (Globals.DirLeft && Types.Player[Globals.playerIndex].X > 0)
             {
                 Types.Player[Globals.playerIndex].Dir = Constants.DIR_LEFT;
+                return true;
+
             }
 
-            return true;
+            return false;
         }
 
         public static bool CheckDirections(byte direction)

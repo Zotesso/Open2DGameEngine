@@ -272,16 +272,6 @@ namespace Client
 
             Panel panel = new Panel();
 
-            Label lblLogin = new Label
-            {
-                Id = "lblLogin",
-                Text = "Login:",
-                TextColor = Color.Black,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
-            };
-
-            panel.Widgets.Add(lblLogin);
             CreateWindow(panel);
         }
     }

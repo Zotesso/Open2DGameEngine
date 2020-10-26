@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Bindings;
 using System.IO;
+using Myra.Graphics2D.UI;
 
 namespace Client
 {
@@ -12,9 +13,11 @@ namespace Client
     {
         public static Texture2D[] Characters = new Texture2D[3];
         public static Texture2D[] Tilesets = new Texture2D[3];
+        private static SpriteFont font;
 
         public static void InitializeGraphics(ContentManager manager)
         {
+            LoadFonts(manager);
             LoadCharacters(manager);
             LoadTilesets(manager);
         }
@@ -31,6 +34,7 @@ namespace Client
                 {
                     if (Types.Player[i].Map == Types.Player[Globals.playerIndex].Map)
                     {
+                        DrawPlayerName(i);
                         DrawPlayer(i);
                     }
                 }
@@ -38,6 +42,10 @@ namespace Client
             Game1._spriteBatch.End();
         }
 
+        private static void LoadFonts(ContentManager manager)
+        {
+            font = manager.Load<SpriteFont>("Font");
+        }
         private static void LoadCharacters(ContentManager manager)
         {
             for(int i = 1; i < Characters.Length; i++)
@@ -61,6 +69,7 @@ namespace Client
 
            cameraLeft = Types.Player[Globals.playerIndex].X  + Types.Player[Globals.playerIndex].XOffset;
            tileViewLeft = Types.Player[Globals.playerIndex].X - 5;
+
             return x - (tileViewLeft * 32) - cameraLeft;
         }
 
@@ -128,8 +137,8 @@ namespace Client
                     break;
             }
 
-            srcrec = new Rectangle((anim) * (Characters[SpriteNum].Width / 12), spriteLeft * (Characters[SpriteNum].Height / 8), Characters[SpriteNum].Width / 12, Characters[SpriteNum].Height / 8);
-            X = Types.Player[index].X * 32 + Types.Player[index].XOffset - ((Characters[SpriteNum].Width / 12 - 32) /2);
+            srcrec = new Rectangle((anim) * (Characters[SpriteNum].Width / 4), spriteLeft * (Characters[SpriteNum].Height / 4), Characters[SpriteNum].Width / 4, Characters[SpriteNum].Height / 4);
+            X = Types.Player[index].X * 32 + Types.Player[index].XOffset - ((Characters[SpriteNum].Width / 4 - 32) /2);
             Y = Types.Player[index].Y * 32 + Types.Player[index].YOffset;
 
             DrawSprite(SpriteNum, X, Y, srcrec);
@@ -152,6 +161,18 @@ namespace Client
                     DrawTile(tileNum, xPos, yPos, srcrec);
                 }
             }
+        }
+
+        private static void DrawPlayerName(int index)
+        { 
+
+            int xoffset = Types.Player[index].X * 32 + Types.Player[index].XOffset;
+            int yoffset = Types.Player[index].Y * 32 + Types.Player[index].YOffset;
+
+            int x = ConvertMapX(xoffset) - 6;
+            int y = ConvertMapY(yoffset) - 20;
+
+            Game1._spriteBatch.DrawString(font, Types.Player[index].Name, new Vector2(x, y), Color.Yellow);
         }
     }
 }
