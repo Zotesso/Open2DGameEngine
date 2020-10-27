@@ -7,7 +7,6 @@ namespace Bindings
     class Constants
     {
         //Player Constants
-        //Player Constants
         public const int MAX_PLAYERS = 100;
 
         
@@ -21,5 +20,9 @@ namespace Bindings
         public const int MAX_MAP_X = 50;
         public const int MAX_MAP_Y = 50;
 
+        public const int MAX_MAP_NPCS = 15;
+
+        //NPC Constants
+        public const int MAX_NPCS = 100;
     }
 }

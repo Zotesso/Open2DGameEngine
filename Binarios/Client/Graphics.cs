@@ -39,6 +39,14 @@ namespace Client
                     }
                 }
             }
+
+            for (int npcNum = 0; npcNum < Constants.MAX_MAP_NPCS; npcNum++)
+            {
+                if (Types.MapNpc[npcNum].Map == Types.Player[Globals.playerIndex].Map)
+                {
+                    DrawNpc(npcNum);
+                }
+            }
             Game1._spriteBatch.End();
         }
 
@@ -173,6 +181,21 @@ namespace Client
             int y = ConvertMapY(yoffset) - 20;
 
             Game1._spriteBatch.DrawString(font, Types.Player[index].Name, new Vector2(x, y), Color.Yellow);
+        }
+
+        private static void DrawNpc(int num)
+        {
+            byte anim = 1;
+            int X, Y;
+            Rectangle srcrec;
+            int SpriteNum = Types.Npc[Types.MapNpc[num].num].Sprite + 1;
+            int spriteLeft = 0;
+
+            srcrec = new Rectangle((anim) * (Characters[SpriteNum].Width / 4), spriteLeft * (Characters[SpriteNum].Height / 4), Characters[SpriteNum].Width / 4, Characters[SpriteNum].Height / 4);
+            X = Types.MapNpc[num].x * 32 + Types.MapNpc[num].xOffset - ((Characters[SpriteNum].Width / 4 - 32) / 2);
+            Y = Types.MapNpc[num].y * 32 + Types.MapNpc[num].yOffset;
+
+            DrawSprite(SpriteNum, X, Y, srcrec);
         }
     }
 }

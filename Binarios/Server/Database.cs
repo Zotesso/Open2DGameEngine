@@ -131,5 +131,42 @@ namespace Server
 
             Console.WriteLine("Maps Loaded");
         }
+
+        // NPC Stuff
+        public void SaveNpcs()
+        {
+            for(int i = 1; i < Constants.MAX_NPCS; i++)
+            {
+                string filename = "Data/Npcs/" + i + ".npc";
+                if (!FileExist(filename))
+                {
+                    SaveNpc(i);
+                }
+            }
+        }
+        public void SaveNpc(int npcnum)
+        {
+            string filename = "Data/Npcs/" + npcnum + ".npc";
+            BinaryFormatter binFormat = new BinaryFormatter();
+            FileStream fs = new FileStream(filename, FileMode.OpenOrCreate);
+            binFormat.Serialize(fs, Types.Npc[npcnum]);
+            fs.Close();
+        }
+
+        public void LoadNpcs()
+        {
+            SaveNpcs();
+
+            for(int i = 1; i < Constants.MAX_NPCS; i++)
+            {
+                string filename = "Data/Npcs/" + i + ".npc";
+                BinaryFormatter binFormat = new BinaryFormatter();
+                FileStream fs = new FileStream(filename, FileMode.Open);
+                Types.Npc[i] = (Types.NpcStruct)binFormat.Deserialize(fs);
+                fs.Close();
+            }
+
+            Console.WriteLine("Npcs Loaded");
+        }
     }
 }

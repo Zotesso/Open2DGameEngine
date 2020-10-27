@@ -12,7 +12,8 @@ namespace Client
         {
             Login,
             Register,
-            InGame
+            InGame,
+            adminPanel
         }
 
         public static void ChangeMenu(Menu menu, Desktop desktop)

@@ -7,6 +7,8 @@ namespace Bindings
     {
         public static PlayerStruct[] Player = new PlayerStruct[Constants.MAX_PLAYERS];
         public static MapStruct[] Map = new MapStruct[Constants.MAX_MAPS];
+        public static NpcStruct[] Npc = new NpcStruct[Constants.MAX_NPCS];
+        public static MapNpcStruct[] MapNpc = new MapNpcStruct[Constants.MAX_MAP_NPCS];
 
         [Serializable]
         public struct PlayerStruct
@@ -52,6 +54,7 @@ namespace Bindings
             public int tpRight;
 
             public TileStruct[,] Tile;
+            public NpcStruct[] Npc;
         }
 
         [Serializable]
@@ -65,6 +68,32 @@ namespace Bindings
             public int Data1;
             public int Data2;
             public int Data3;
+        }
+
+        [Serializable]
+        public struct NpcStruct {
+            public string Name;
+
+            public int Sprite;
+        }
+
+        public struct MapNpcStruct
+        {
+            public int num;
+
+            public int target;
+            public int HP;
+            public int MAXHP;
+
+            public int Map;
+            public byte x;
+            public byte y;
+            public byte dir;
+
+            public int xOffset;
+            public int yOffset;
+            public byte moving;
+            public byte attacking;
         }
     }
 }

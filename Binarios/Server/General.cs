@@ -30,6 +30,7 @@ namespace Server
             }
 
             db.LoadMaps();
+            db.LoadNpcs();
 
             stcp.InitializeNetwork();
             Console.WriteLine("Server has started");
