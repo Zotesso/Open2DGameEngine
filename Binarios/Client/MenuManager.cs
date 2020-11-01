@@ -27,5 +27,11 @@ namespace Client
 
             InterfaceGUI.Windows[(int)menu].Visible = true;
         }
+
+        public static void ShowAdminPanel()
+        {
+            var messageBox = Dialog.CreateMessageBox("Muito Curto", "Sua senha e Username devem ter pelomenos 6 digitos.");
+            messageBox.ShowModal(Game1._desktop);
+        }
     }
 }

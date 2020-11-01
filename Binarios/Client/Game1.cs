@@ -99,6 +99,11 @@ namespace Client
             Globals.DirDown = Keyboard.GetState().IsKeyDown(Keys.Down);
             Globals.DirRight = Keyboard.GetState().IsKeyDown(Keys.Right);
             Globals.DirLeft = Keyboard.GetState().IsKeyDown(Keys.Left);
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Insert) && Types.Player[Globals.playerIndex].Access > 4)
+            {
+                MenuManager.ShowAdminPanel();
+            }
         }
     }
 }

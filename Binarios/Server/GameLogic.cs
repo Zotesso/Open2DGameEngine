@@ -7,6 +7,7 @@ namespace Server
     class GameLogic
     {
         private static ServerTCP stcp = new ServerTCP();
+        private static Database db = new Database();
 
         public static void JoinGame(int index)
         {
@@ -23,7 +24,6 @@ namespace Server
 
             buffer.Dispose();
             stcp.SendJoinMap(index);
-            Console.WriteLine("aqui acheg1o2");
         }
 
         public static void PlayerMove(int index, byte dir, int movement)
@@ -47,9 +47,6 @@ namespace Server
 
                 stcp.SendDataToMapBut(index, Types.Player[index].Map ,buffer.ToArray());
                 buffer.Dispose();
-
-                Console.WriteLine("Player index = " + index.ToString());
-                Console.WriteLine(Types.Player[1].X);
             }
         }
 
@@ -91,6 +88,56 @@ namespace Server
             }
 
             return y + ((dir * 2) - 1);
+        }
+
+        public static void SetPlayerAccess(int index, byte access)
+        {
+            Types.Player[index].Access = access;
+            stcp.SendPlayerData(index);
+        }
+
+        public static int GetPlayerIndexByName(string name)
+        {
+            for(int i = 0; i < Constants.MAX_PLAYERS; i++)
+            {
+                if(Types.Player[i].Name == name)
+                {
+                    return i;
+                }
+
+                if (Types.Player[i].Name == String.Empty)
+                {
+                    return -1;
+                }
+            }
+
+            return -1;
+        }
+
+        public static void LeftGame(int index)
+        {
+            db.SavePlayer(index);
+            ClearPlayer(index);
+            stcp.SendPlayerData(index);
+        }
+
+        public static void ClearPlayer(int index)
+        {
+            Types.Player[index].Access = 0;
+            Types.Player[index].Dir = 0;
+            Types.Player[index].EXP = 0;
+            Types.Player[index].Level = 0;
+            Types.Player[index].Login = "";
+            Types.Player[index].Map = 0;
+            Types.Player[index].Moving = 0;
+            Types.Player[index].Name = "";
+            Types.Player[index].Password = "";
+            Types.Player[index].Sprite = 0;
+            Types.Player[index].Steps = 0;
+            Types.Player[index].X = 0;
+            Types.Player[index].XOffset = 0;
+            Types.Player[index].Y = 0;
+            Types.Player[index].YOffset = 0;
         }
     }
 }

@@ -54,6 +54,7 @@ namespace Server
         private void CloseSocket(int index)
         {
             Console.WriteLine("Connection from " + IP + "has been ended.");
+            GameLogic.LeftGame(index);
             Socket.Close();
             Socket = null;
         }

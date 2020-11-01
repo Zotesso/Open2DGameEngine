@@ -97,6 +97,7 @@ namespace Server
             buffer.AddByte(Types.Player[index].Dir);
             buffer.AddInteger(Types.Player[index].X);
             buffer.AddInteger(Types.Player[index].Y);
+            buffer.AddByte(Types.Player[index].Access);
 
             SendDataToMap(Types.Player[index].Map, buffer.ToArray());
             buffer.Dispose();

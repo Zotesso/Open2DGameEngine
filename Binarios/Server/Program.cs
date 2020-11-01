@@ -18,8 +18,23 @@ namespace Server
 
         static void ConsoleThread()
         {
-            Console.ReadLine();
+          var cmnd =   Console.ReadLine();
 
+            if (cmnd == "SetAccess")
+            {
+                Console.WriteLine("--------Nome do jogador-------");
+                string playerToGetAccess = Console.ReadLine();
+                Console.WriteLine("--------Tier do Acesso 0 = sem acesso, 10 = acesso maximo-------");
+                byte accessToBeSeted = Convert.ToByte(Console.ReadLine());
+
+                int playerIndex = GameLogic.GetPlayerIndexByName(playerToGetAccess);
+                if (playerIndex > -1)
+                {
+                    GameLogic.SetPlayerAccess(playerIndex, accessToBeSeted);
+                }
+            }
+            
+            ConsoleThread();
         }
     }
 }

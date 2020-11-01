@@ -30,6 +30,8 @@ namespace Bindings
             public int YOffset;
             public int Moving;
             public byte Steps;
+
+            public byte Access;
         }
 
         public struct RECT {

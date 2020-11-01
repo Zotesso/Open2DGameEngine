@@ -113,7 +113,7 @@ namespace Client
             byte targetDirection = buffer.GetByte();
             int targetX = buffer.GetInteger();
             int targetY = buffer.GetInteger();
-
+            byte targetAccess = buffer.GetByte();
 
 
             Types.Player[targetIndex].X = targetX;
@@ -124,6 +124,7 @@ namespace Client
             Types.Player[targetIndex].Map = targetMap;
             Types.Player[targetIndex].Level = targetLevel;
             Types.Player[targetIndex].EXP = targetEXP;
+            Types.Player[targetIndex].Access = targetAccess;
         }
     }
 }
